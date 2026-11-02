@@ -1,0 +1,1 @@
+"""CrowdQuest application package."""

@@ -1,0 +1,17 @@
+# Production reverse proxy example. Replace the hostname with your real domain.
+crowdquest.example.com {
+    encode zstd gzip
+
+    header {
+        Strict-Transport-Security "max-age=31536000; includeSubDomains"
+        X-Content-Type-Options "nosniff"
+        Referrer-Policy "strict-origin-when-cross-origin"
+        Permissions-Policy "camera=(), microphone=(), geolocation=()"
+        -Server
+    }
+
+    @api path /api/* /health/*
+    reverse_proxy @api 127.0.0.1:8000
+
+    reverse_proxy 127.0.0.1:3000
+}
